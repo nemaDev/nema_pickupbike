@@ -8,6 +8,6 @@
 - ox_target
 - ox_lib
 
-preview https://prnt.sc/658ZoQjf-f5q
-https://prnt.sc/5gxTCEAE86nb
-https://prnt.sc/91vr5Cq0Hgup
+preview: https://prnt.sc/658ZoQjf-f5q
+- https://prnt.sc/5gxTCEAE86nb
+- https://prnt.sc/91vr5Cq0Hgup
