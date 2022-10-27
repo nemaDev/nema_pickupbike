@@ -1,5 +1,3 @@
-ESX = exports["es_extended"]:getSharedObject()
-
 local models = {
    `bmx`,
    `cruiser`,
@@ -13,7 +11,7 @@ local models = {
 exports.ox_target:addModel(models, {
 	{
         event = "pickup:bike",
-        icon = "fas fa-bicycle",
+        icon = Config.Icon_bike,
         label = Config.PickupBike,
 		distance = 2.0
 	},
@@ -30,7 +28,7 @@ AddEventHandler('pickup:bike', function()
     if GetEntityModel(vehicle) == GetHashKey("bmx") or GetEntityModel(vehicle) == GetHashKey("scorcher") or GetEntityModel(vehicle) == GetHashKey("cruiser") or GetEntityModel(vehicle) == GetHashKey("fixter") or GetEntityModel(vehicle) == GetHashKey("tribike") or GetEntityModel(vehicle) == GetHashKey("tribike2") or GetEntityModel(vehicle) == GetHashKey("tribike3") then
 
     AttachEntityToEntity(vehicle, playerPed, bone, 0.0, 0.24, 0.10, 340.0, 330.0, 330.0, true, true, false, true, 1, true)
-    lib.showTextUI("["..Config.KeydropBike.."] " ..Config.DropBike)
+    lib.showTextUI(("[%s] %s"):format(Config.KeydropBike, Config.DropBike))
 
     RequestAnimDict("anim@heists@box_carry@")
     while (not HasAnimDictLoaded("anim@heists@box_carry@")) do Wait(0) end
