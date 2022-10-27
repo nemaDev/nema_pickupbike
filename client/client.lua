@@ -18,13 +18,14 @@ exports.ox_target:addModel(models, {
 })
 
 
-local vehicle
+local vehicle, bike = nil, false
 AddEventHandler('pickup:bike', function()
     local coords = GetEntityCoords(cache.ped)
     vehicle = GetClosestVehicle(coords, 5.0, 0, 71)
+    if not vehicle then return end 
     local bone = GetPedBoneIndex(cache.ped, 0xE5F3)
-    local bike = false
-		
+    bike = false
+  
     local isValidVehicle = false
     local vehicleModel = GetEntityModel(vehicle)
     for i=1, #models do
