@@ -12,4 +12,4 @@ preview: https://prnt.sc/658ZoQjf-f5q
 - https://prnt.sc/5gxTCEAE86nb
 - https://prnt.sc/91vr5Cq0Hgup
 ## 😎 Special thanks for helping me with testing 👊😉👍
-[Ehbw2]([https://discord.gg/cEMSeE9dgS](https://github.com/Ehbw2))
+- 💪 [Ehbw2](https://github.com/Ehbw2)
