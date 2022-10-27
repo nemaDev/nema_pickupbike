@@ -15,7 +15,7 @@ exports.ox_target:addModel(models, {
         event = "pickup:bike",
         icon = "fas fa-bicycle",
         label = Config.PickupBike,
-		distance = 1.5
+		distance = 2.0
 	},
 })
 
