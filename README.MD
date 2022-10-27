@@ -11,3 +11,5 @@
 preview: https://prnt.sc/658ZoQjf-f5q
 - https://prnt.sc/5gxTCEAE86nb
 - https://prnt.sc/91vr5Cq0Hgup
+## 😎 Special thanks for helping me with testing 👊😉👍
+- 💪 Ehbw2
