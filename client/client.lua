@@ -1,69 +1,54 @@
-local models = {
-    `bmx`,
-    `cruiser`,
-    `scorcher`,
-    `fixter`,
-    `tribike`,
-    `tribike2`,
-    `tribike3`,
- }
+local BikeModels = {}
+
+for i in pairs(Config.Models) do
+	table.insert(BikeModels, i)
+end
+
+exports.ox_target:addModel(BikeModels, {{
+	event = 'ntr-pickbike:pickbike',
+	icon = Config.targetIcon,
+	label = Config.targetLabel,
+	distance = Config.targetDistance
+}})
+
+local bike, loop, model = false, false, false
  
- exports.ox_target:addModel(models, {
-     {
-         event = "pickup:bike",
-         icon = Config.Icon_bike,
-         label = Config.PickupBike,
-         distance = 2.0
-     },
- })
- 
- 
- local vehicle, bike = nil, false
- AddEventHandler('pickup:bike', function()
-     local coords = GetEntityCoords(cache.ped)
-     vehicle = GetClosestVehicle(coords, 5.0, 0, 71)
-     if not vehicle then return end 
-     local bone = GetPedBoneIndex(cache.ped, 0xE5F3)
-     bike = false
-   
-     local isValidVehicle = false
-     local vehicleModel = GetEntityModel(vehicle)
-     for i=1, #models do
-     if models[i] == vehicleModel then
-        isValidVehicle = true
-        break
-     end
-     end
- 
-     AttachEntityToEntity(vehicle, cache.ped, bone, 0.0, 0.24, 0.10, 340.0, 330.0, 330.0, true, true, false, true, 1, true)
-     lib.showTextUI(("[%s] %s"):format(Config.KeydropBike, Config.DropBike))
- 
-     RequestAnimDict("anim@heists@box_carry@")
-     while (not HasAnimDictLoaded("anim@heists@box_carry@")) do Wait(0) end
-     TaskPlayAnim(cache.ped, "anim@heists@box_carry@", "idle", 2.0, 2.0, 50000000, 51, 0, false, false, false)
-     bike = true 
-     while bike do
-         Wait(0)
-         if bike and IsEntityPlayingAnim(cache.ped, "anim@heists@box_carry@", "idle", 3) ~= 1 then
-         RequestAnimDict("anim@heists@box_carry@")
-         while (not HasAnimDictLoaded("anim@heists@box_carry@")) do Wait(0) end
-             TaskPlayAnim(cache.ped, "anim@heists@box_carry@", "idle", 2.0, 2.0, 50000000, 51, 0, false, false, false)
-             if not IsEntityAttachedToEntity(cache.ped, vehicle) then
-                 bike = false
-                 ClearPedTasksImmediately(cache.ped)
-             end
-         end
-     end
- end)
- 
- RegisterCommand(Config.DropBike, function()
-  if bike and vehicle and IsEntityAttached(vehicle) then
-     DetachEntity(vehicle, nil, nil)
-     SetVehicleOnGroundProperly(vehicle)
-     ClearPedTasksImmediately(cache.ped)
-     bike = false
-     vehicle = nil
-     lib.hideTextUI()
-  end
- end, false)
- RegisterKeyMapping(Config.DropBike, Config.DropBike, 'keyboard', Config.KeydropBike)
+AddEventHandler('ntr-pickbike:pickbike', function(target)
+	bike = false
+	repeat Wait(100) until not loop
+	loop = true
+	bike = target.entity
+	lib.showTextUI(('[%s] %s'):format(Config.DropBikeKey, Config.DropBikeDescription))
+	model = GetDisplayNameFromVehicleModel(GetEntityModel(target.entity))
+	AttachEntityToEntity(target.entity, cache.ped, GetPedBoneIndex(cache.ped, Config.Bone), Config.Models[model].position.x, Config.Models[model].position.y, Config.Models[model].position.z, Config.Models[model].rotation.x, Config.Models[model].rotation.y, Config.Models[model].rotation.z, true, true, false, true, 1, true)
+	while bike do
+		if not IsEntityAttached(target.entity)
+		or (not Config.CanRagdoll and (IsPedDeadOrDying(cache.ped, 1) or IsPedRagdoll(cache.ped) or IsPedInWrithe(cache.ped) or IsPedFalling(cache.ped)))
+		or (not Config.CanClimb and IsPedClimbing(cache.ped))
+		or (not Config.CanMelee and IsPedRunningMeleeTask(cache.ped))
+		or (not Config.CanSwim and IsPedSwimming(cache.ped)) 
+		or (not Config.CanVehicle and cache.vehicle)
+		or (not Config.CanDrive and cache.seat == -1) 
+		then bike = false end
+		if bike and not IsEntityPlayingAnim(cache.ped, Config.AnimDict, Config.Anim, 3) then
+			RequestAnimDict(Config.AnimDict)
+			while not HasAnimDictLoaded(Config.AnimDict) do Wait(0) end
+			TaskPlayAnim(cache.ped, Config.AnimDict, Config.Anim, 2.0, 2.0, -1, 51)
+		end
+		Wait(500)
+	end
+	lib.hideTextUI()
+	if IsEntityAttached(target.entity) then
+		DetachEntity(target.entity, false, false)
+	end
+	ClearPedTasksImmediately(cache.ped)
+	if Config.BikeGroundProperly then
+		Wait(500)
+		SetVehicleOnGroundProperly(target.entity)
+	end
+	loop = false
+end)
+
+RegisterCommand(Config.DropBikeCommand, function() bike = false end)
+
+RegisterKeyMapping(Config.DropBikeCommand, Config.DropBikeDescription, 'keyboard', Config.DropBikeKey)
