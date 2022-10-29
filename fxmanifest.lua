@@ -14,3 +14,9 @@ shared_scripts {
 client_script {
     'client/*.lua'
 }
+
+escrow_ignore {
+    'config.lua',
+    'client/*.lua',
+    'fxmanifest'
+  }
