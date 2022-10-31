@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'Nema#0001'
 description 'nema pickupbike'
-version '1.0.0'
+version '1.1.0'
 lua54 'yes'
 use_experimental_fxv2_oal 'yes'
 
