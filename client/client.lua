@@ -5,7 +5,7 @@ for i in pairs(Config.Models) do
 end
 
 exports.ox_target:addModel(BikeModels, {{
-	event = 'ntr-pickbike:pickbike',
+	event = 'nrp-pickbike:pickbike',
 	icon = Config.targetIcon,
 	label = Config.targetLabel,
 	distance = Config.targetDistance
@@ -13,7 +13,7 @@ exports.ox_target:addModel(BikeModels, {{
 
 local bike, loop, model = false, false, false
  
-AddEventHandler('ntr-pickbike:pickbike', function(target)
+AddEventHandler('nrp-pickbike:pickbike', function(target)
 	bike = false
 	repeat Wait(100) until not loop
 	loop = true
