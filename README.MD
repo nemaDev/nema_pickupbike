@@ -7,9 +7,9 @@
 - ox_lib
 
 #How To Install
-- Drag and drop nrp-pickupbike-main
-- Rename from nrp-pickupbike-main to nrp-pickupbike
-- In your server.cfg add ensure nrp-pickupbike
+- Drag and drop nema_pickupbike-main
+- Rename from nema_pickupbike-main to nema_pickupbike
+- In your server.cfg add ensure nema_pickupbike
 
 preview: https://prnt.sc/658ZoQjf-f5q
 - https://prnt.sc/5gxTCEAE86nb
