@@ -11,7 +11,7 @@ use_experimental_fxv2_oal 'yes'
 client_script {
     '@ox_lib/init.lua',
     'config.lua',
-    'client/client.lua'
+    'client/main.lua'
 }
 
 lua54 'yes'
